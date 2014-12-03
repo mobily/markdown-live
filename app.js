@@ -82,9 +82,9 @@
 		}
 
 		var Message = {
-			start: 'server runs: %s',
+			start: 'server: %s',
 			empty: 'no *.md files in %s',
-			emit: 'file changed: %s'
+			emit: 'file: %s'
 		}
 
 		return {
