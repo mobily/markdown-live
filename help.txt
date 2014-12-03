@@ -1,0 +1,11 @@
+usage: mdlive [OPTIONS]
+
+  Markdown preview with live update.
+
+OPTIONS:
+
+  -h, --help         You're reading it.
+  -d, --dir          Specifies the directory to find *.md files (default: current directory).
+  -p, --port         Specifies the port to use (default: 2304).
+  -v, --verbose      Provides debug messages.
+

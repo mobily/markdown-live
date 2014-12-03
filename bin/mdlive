@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+var path = require('path'),
+	argv = require('minimist')(process.argv.slice(2), { alias: { h: 'help', p: 'port', d: 'dir', v: 'verbose' } }),
+	mdlive = require(path.join(__dirname, '..', 'app'))(argv);
