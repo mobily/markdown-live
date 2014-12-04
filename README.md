@@ -49,7 +49,7 @@ To run with custom port and directory:
 
 	The MIT License (MIT)
 
-	Copyright (c) 2014 Sebastian Ruml
+	Copyright (c) 2014 Marcin Dziewulski
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
