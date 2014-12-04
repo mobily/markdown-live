@@ -50,7 +50,7 @@
 				return type === 'function' || type === 'object' && !!obj;
 			},
 			argsToArr: function(args){
-				return Array.prototype.slice.call(args)
+				return Array.prototype.slice.call(args);
 			},
 			joinArgs: function(){
 				return _.argsToArr(arguments).join('');

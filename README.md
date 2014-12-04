@@ -1,6 +1,6 @@
 # MarkdownLive
 
-Markdown preview with live update.
+Markdown preview with live update ([full video](https://www.dropbox.com/s/h28xlfq9e8ir8rk/markdown-live.mp4?dl=0)).
 
 ![](https://raw.githubusercontent.com/mobily/markdown-live/master/gif.gif)
 
