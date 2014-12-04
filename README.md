@@ -6,7 +6,7 @@ Markdown preview with live update.
 
 ## Installation
 
-    $ npm install -g mdlive
+    $ npm install -g markdown-live
 
 ## Usage
 
