@@ -17,7 +17,9 @@ Markdown preview with live update.
 	  -p, --port         Specifies the port to use (default: 2304).
 	  -v, --verbose      Provides debug messages.
 
+### Alternatives
 
+ - [Livedown](https://github.com/shime/livedown/)
 
 ### License
 

@@ -1,5 +1,5 @@
 {
-  "name": "mdlive",
+  "name": "markdown-live",
   "version": "1.0.0",
   "description": "Markdown preview with live update.",
   "main": "app.js",
@@ -22,13 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mobily/MarkdownLive.git"
+    "url": "https://github.com/mobily/markdown-live.git"
   },
   "keywords": [
     "markdown", "live", "preview"
   ],
   "bugs": {
-    "url": "https://github.com/mobily/MarkdownLive/issues"
+    "url": "https://github.com/mobily/markdown-live/issues"
   },
-  "homepage": "https://github.com/mobily/MarkdownLive"
+  "homepage": "https://github.com/mobily/markdown-live"
 }
