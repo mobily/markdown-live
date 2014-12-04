@@ -2,6 +2,8 @@
 
 Markdown preview with live update.
 
+![](https://raw.githubusercontent.com/mobily/markdown-live/master/gif.gif)
+
 ### Installation
 
     $ npm install -g mdlive
