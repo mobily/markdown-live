@@ -11,7 +11,7 @@
 		filewatcher = require('filewatcher')({ interval: 1000 }),
 		dirwatcher = require('watch'),
 		open = require('open'),
-		markdown = require('markdown').markdown,
+		markdown = require('marked'),
 		Promise = require('promise');
 
 	var MarkdownLive = function(options){
@@ -76,7 +76,7 @@
 					name: path.basename(file), 
 					path: file, 
 					markdown: data,
-					content: markdown.toHTML(data)
+					content: markdown(data)
 				}
 			}
 		}
