@@ -1,33 +1,53 @@
-# MarkdownLive
+# markdown-live
 
-Markdown preview with live update ([full video](https://www.dropbox.com/s/h28xlfq9e8ir8rk/markdown-live.mp4?dl=0)).
+> Markdown preview with live update.
 
-![](https://raw.githubusercontent.com/mobily/markdown-live/master/gif.gif)
+## Contents
+
+* [Screencasts](#screencasts)
+* [Installation](#installation)
+* [Usage](#usage)
+* [CLI](#cli)
+* [Alternatives](#alternatives)
+* [Contributions](#contributions)
+* [Contact](#contact)
+* [Changelog](#changelog)
+* [License](#license)
+
+## Screencasts
 
 ## Installation
 
-    $ npm install -g markdown-live
+```shell
+$ npm install -g markdown-live
+```
 
 ## Usage
 
 To list all available options:
 
-	$ mdlive --help
+```shell
+$ mdlive --help
+```
 
 To run with custom port and directory:
 
-	$ mdlive --port 1024 --dir [PATH]
+```shell
+$ mdlive --port 1024 --dir [PATH]
+```
 
 ## CLI
 
-    Usage: mdlive [OPTIONS]
+```shell
+Usage: mdlive [OPTIONS]
 
-    OPTIONS:
+OPTIONS:
 
-	  -h, --help         Show this message and exit.
-	  -d, --dir          Specifies the directory to find *.md files (default: current directory).
-	  -p, --port         Specifies the port to use (default: 2304).
-	  -v, --verbose      Provides debug messages.
+  -h, --help         Show this message and exit.
+  -d, --dir          Specifies the directory to find *.md files (default: current directory).
+  -p, --port         Specifies the port to use (default: 2304).
+  -v, --verbose      Provides debug messages.
+```
 
 ## Alternatives
 
@@ -44,6 +64,13 @@ To run with custom port and directory:
 
  - Marcin Dziewulski, <hello@mobily.pl>
  - Twitter: [@marcinmobily](https://twitter.com/marcinmobily)
+
+## Changelog
+
+```
+2014-12-08    1.0.5    better code highlighting
+2014-12-03    1.0.0    initial version
+```
 
 ## License
 

@@ -12,6 +12,7 @@
 		dirwatcher = require('watch'),
 		open = require('open'),
 		markdown = require('marked'),
+        renderer = new markdown.Renderer(),
 		Promise = require('promise');
 
 	var MarkdownLive = function(options){
@@ -76,9 +77,17 @@
 					name: path.basename(file), 
 					path: file, 
 					markdown: data,
-					content: markdown(data)
+					content: markdown(data, { renderer: renderer })
 				}
-			}
+			},
+            renderer: function(){
+                var view = fs.readFileSync(path.join(__dirname, 'views', 'code.haml'), 'utf8');
+
+                renderer.code = function(code, lang){
+                    var html = haml.render(view, { locals: { code: code, lang: lang } });
+                    return html;
+                }
+            }
 		}
 
 		var Message = {
@@ -86,6 +95,8 @@
 			empty: 'no *.md files in %s',
 			emit: 'file: %s'
 		}
+
+        
 
 		return {
 			/**
@@ -102,6 +113,7 @@
 			initialize: function(options){
 				this.options = _.extend(_.options, options);
 				_.options = this.options;
+                _.renderer();
 
 				this.url = _.joinArgs('http://localhost:', this.options.port);
 
@@ -111,7 +123,7 @@
 				this.open();
 			},
 			/**
-			 *	Show instruction.
+			 *	Show help.
 			 *
 			 *	@method help
 			 */
@@ -246,7 +258,7 @@
 			/**
 			 *	Create websocket events.
 			 *
-			 *	@method open
+			 *	@method socket
 			 */
 			socket: function(){
 				var this_ = this;
