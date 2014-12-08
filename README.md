@@ -16,6 +16,10 @@
 
 ## Screencasts
 
+![](https://raw.githubusercontent.com/mobily/markdown-live/master/screencasts/gif1.gif)
+
+![](https://raw.githubusercontent.com/mobily/markdown-live/master/screencasts/gif2.gif)
+
 ## Installation
 
 ```shell
