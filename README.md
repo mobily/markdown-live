@@ -40,6 +40,12 @@ To run with custom port and directory:
 $ mdlive --port 1024 --dir [PATH]
 ```
 
+To watch *.md files outside the current directory:
+
+```shell
+$ mdlive --file [, FILE]
+```
+
 ## CLI
 
 ```shell
@@ -49,6 +55,7 @@ OPTIONS:
 
   -h, --help         Show this message and exit.
   -d, --dir          Specifies the directory to find *.md files (default: current directory).
+  -f, --file         Specifies *.md files to watch.
   -p, --port         Specifies the port to use (default: 2304).
   -v, --verbose      Provides debug messages.
 ```
@@ -72,6 +79,7 @@ OPTIONS:
 ## Changelog
 
 ```
+2014-12-09    1.0.6    watch *.md files outside the current directory (option: --file)
 2014-12-08    1.0.5    better code highlighting
 2014-12-03    1.0.0    initial version
 ```

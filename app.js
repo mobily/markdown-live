@@ -11,9 +11,8 @@
         filewatcher = require('filewatcher')({ interval: 1000 }),
         dirwatcher = require('watch'),
         open = require('open'),
-        markdown = require('marked'),
-        renderer = new markdown.Renderer(),
-        Promise = require('promise');
+        Markdown = require('marked'),
+        renderer = new Markdown.Renderer();
 
     var MarkdownLive = function(options){
         if (!(this instanceof MarkdownLive)){
@@ -30,7 +29,8 @@
                 port: 2304,
                 dir: path.resolve('.'),
                 verbose: false,
-                help: false
+                help: false,
+                file: false
             },
             log: function(message){
                 if (!this.options.verbose) return;
@@ -39,6 +39,9 @@
 
                 arr[0] = _.joinArgs('[mdlive] ', message);
                 console.log.apply(null, arr);
+            },
+            isMD: function(file){
+                return /\.md$/.test(file);
             },
             isEmpty: function(arr){
                 return !arr.length;
@@ -73,11 +76,15 @@
                 return obj;
             },
             buildData: function(file, data){
+                var name = path.basename(file),
+                    dir = file.replace(name, '');
+
                 return { 
-                    name: path.basename(file), 
+                    name: name, 
+                    dir: dir,
                     path: file, 
                     markdown: data,
-                    content: markdown(data, { renderer: renderer })
+                    content: Markdown(data, { renderer: renderer })
                 }
             },
             renderer: function(){
@@ -93,10 +100,13 @@
         var Message = {
             start: 'server: %s',
             empty: 'no *.md files in %s',
-            emit: 'file: %s'
+            emit: 'saved: %s',
+            watch: 'watch: %s',
+            added: 'added: %s',
+            removed: 'removed: %s',
+            not_exist: 'doesn\'t exist: %s'
         }
 
-        
 
         return {
             /**
@@ -112,6 +122,7 @@
              */
             initialize: function(options){
                 this.options = _.extend(_.options, options);
+
                 _.options = this.options;
                 _.renderer();
 
@@ -147,13 +158,11 @@
                 app.use(express.static(path.join(__dirname, 'public')));
 
                 app.get('/', function (req, res){
-                    var view = fs.readFileSync(path.join(__dirname, 'views', 'index.haml'), 'utf8'),
-                        prepare = this_.prepare();
+                    var view = fs.readFileSync(path.join(__dirname, 'views', 'index.haml'), 'utf8');
 
-                    prepare.then(function(){
-                        this_.watch();
-                        this_.check();
-                    });
+                    this_.prepare();
+                    this_.watch();
+                    this_.check();
 
                     res.end(haml.render(view));
                 });
@@ -162,36 +171,33 @@
                 _.log(Message.start, this.url);
             },
             /**
-             *  Find all *.md files and create new array with data.
+             *  Find all *.md files and create new array.
              *
              *  @method prepare
              */
             prepare: function(){
-                var this_ = this,
-                    promise = new Promise(function(resolve, reject){
+                var this_ = this;
 
-                        fs.readdir(this_.options.dir, function(err, files){
-                            if (err) return reject(err);
+                var files = files = fs.readdirSync(this.options.dir).filter(function(file){
+                    return _.isMD(file);
+                }).map(function(name){
+                    return path.join(this_.options.dir, name);
+                }) || [];
 
-                            this_.files = files.filter(function(file){
-                                return /\.md$/.test(file);
-                            }).map(function(name){
-                                var file = path.join(this_.options.dir, name),
-                                    content = fs.readFileSync(file, 'utf8');
-
-                                return _.buildData(file, content);
-                            });
-
-                            if (_.isEmpty(this_.files)){ 
-                                _.log(Message.empty, this_.options.dir);
-                            }
-
-                            resolve();
-                        });
-
+                if (this.options.file){
+                    this.options.file.split(',').forEach(function(file){
+                        if (fs.existsSync(file) && _.isMD(file)){
+                            files.push(file);
+                        } else {
+                            _.log(Message.not_exist, file);
+                        }
                     });
+                }
 
-                return promise;
+                this.files = files.map(function(file){
+                    var content = fs.readFileSync(file, 'utf8');
+                    return _.buildData(file, content);
+                });
             },
             /**
              *  Listen on file changes.
@@ -205,6 +211,7 @@
 
                 this.files.forEach(function(file){
                     filewatcher.add(file.path);
+                    _.log(Message.watch, file.path);
                 });
 
                 filewatcher.on('change', function(file){
@@ -239,11 +246,13 @@
                             if (err) return;
 
                             filewatcher.add(file);
+                            _.log(Message.added, file);
                             io.emit('push', _.buildData(file, data));
                         });
                     } else if (current.nlink === 0) {
                         io.emit('rm', file);
                         filewatcher.remove(file);
+                        _.log(Message.removed, file);
                     }
                 });
             },
