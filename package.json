@@ -1,6 +1,6 @@
 {
   "name": "markdown-live",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Markdown preview with live update.",
   "main": "app.js",
   "author": "Marcin Dziewulski <hello@mobily.pl>",
