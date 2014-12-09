@@ -40,7 +40,7 @@ To run with custom port and directory:
 $ mdlive --port 1024 --dir [PATH]
 ```
 
-To watch *.md files outside the current directory:
+To watch `*.md` files outside the current directory:
 
 ```shell
 $ mdlive --file [, FILE]
@@ -59,10 +59,6 @@ OPTIONS:
   -p, --port         Specifies the port to use (default: 2304).
   -v, --verbose      Provides debug messages.
 ```
-
-## Alternatives
-
- - [Livedown](https://github.com/shime/livedown/)
 
 ## Contributions
 
