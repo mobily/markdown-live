@@ -30,7 +30,8 @@
                 dir: path.resolve('.'),
                 verbose: false,
                 help: false,
-                file: false
+                file: false,
+                socket: 'http://localhost:2304'
             },
             log: function(message){
                 if (!this.options.verbose) return;
@@ -41,7 +42,7 @@
                 console.log.apply(null, arr);
             },
             isMD: function(file){
-                return /\.md$/.test(file);
+                return /\.(markdown|mdown|mkdn|md|mkd|mdwn|mdtxt|mdtext)$/.test(file);
             },
             isEmpty: function(arr){
                 return !arr.length;
@@ -91,8 +92,12 @@
                 var view = fs.readFileSync(path.join(__dirname, 'views', 'code.haml'), 'utf8');
 
                 renderer.code = function(code, lang){
-                    var html = haml.render(view, { locals: { code: code, lang: lang } });
-                    return html;
+                    return haml.render(view, {
+                            locals: {
+                                code: code,
+                                lang: lang
+                            }
+                        });
                 }
             }
         }
@@ -164,7 +169,13 @@
                     this_.watch();
                     this_.check();
 
-                    res.end(haml.render(view));
+                    var render = haml.render(view, {
+                        locals: {
+                            socket: this_.options.socket
+                        }
+                    })
+
+                    res.end(render);
                 });
 
                 server.listen(this.options.port);
@@ -178,7 +189,7 @@
             prepare: function(){
                 var this_ = this;
 
-                var files = files = fs.readdirSync(this.options.dir).filter(function(file){
+                var files = fs.readdirSync(this.options.dir).filter(function(file){
                     return _.isMD(file);
                 }).map(function(name){
                     return path.join(this_.options.dir, name);
@@ -236,7 +247,7 @@
                     ignoreDirectoryPattern: /.+/,
                     ignoreUnreadableDir: true,
                     filter: function(file){
-                        return /\.md$/.test(file);
+                        return _.isMD(file);
                     }
                 }, function(file, current, prev){
                     if (_.isObject(file)) return;

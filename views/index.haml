@@ -9,4 +9,6 @@
   %body
     %div#content.content
       %div#markdown.content__inner
+    %script{ type: 'text/javascript' }
+      != 'var Db = { socket: "'+socket+'" }'
     %script{ type: 'text/javascript', src: '/js/app.js' }
