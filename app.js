@@ -85,7 +85,7 @@
                     dir: dir,
                     path: file, 
                     markdown: data,
-                    content: Markdown(data, { renderer: renderer })
+                    content: Markdown(data, { renderer: renderer, sanitize: true })
                 }
             },
             renderer: function(){
